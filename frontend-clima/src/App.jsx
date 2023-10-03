@@ -1,12 +1,13 @@
 import './App.css'
-import  { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 
 function App() {
   const [region, setRegion] = useState('');
   const [error, setError] = useState('');
- // const [informacionBackend, setInformacionBackend] = useState([]);
+  const [infoClima, setInfoClima] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
 
@@ -15,48 +16,20 @@ function App() {
     setError('');
   };
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!region.trim()) {
       setError('Por favor, ingresa una región válida');
     } else {
-      console.log('Región válida:', region);
-      axios.post('http://localhost:8082/buscarclima')
-      .then(response => {
-        console.log(response.data);
-        alert(
-          "TEMPERATURA:" + "\n" +
-          "Pais: " + response.data.location.country + "\n" +
-          "Ciudad: " + response.data.location.name + "\n" +
-          "Fecha: " + response.data.location.localtime + "\n" +
-          "Temperatura: " + response.data.current.feelslike_c + " - " + response.data.current.feelslike_f
-        );
-
-
-        // 1) REPO
-        // crear repos de front y de back y subir los proyecto
-
-        // 2) FRONTEND
-        // crear una pagina (o usar la actual) donde mostrar la info y mostrarla. 
-        // opcional: agregar boton de nueva busqueda.
-
-        // 3) BACKEND:
-        // Dinamizar / hacer que la region llegue por parametro
-
-        // 4) FRONTEND
-        // volver al frontend y mandarle la region ingresada.
-        // ¿como se hace? utilizando la estructura de axios a partir de linea 25 para enviarle la region como parte de la request (solicitud)
-        
-        //setInformacionBackend(response.data);
-        console.log()
-      })
-      .catch(error => {
+      try {
+        setLoading(true);
+        const response = await axios.post(`http://localhost:8082/buscarclima?region=${region}`);
+        console.log('Respuesta del servidor:', response.data);
+        setInfoClima(response.data);
+        setLoading(false);
+      } catch (error) {
         console.error(error);
-      });
-
-  
-  
+      }
     }
   };
 
@@ -83,9 +56,43 @@ function App() {
             </div>
           </form>
         </div>
+
+    
       </div>
+
+      <>
+         {loading == true ? (
+            <div className="spinner-border text-light container" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : (
+          <>
+          </>
+  
+        )}
+      
+      </>
+      {infoClima !== null ? (
+        <div className="container card-container">
+          <div className="content card">
+            <h1 className="h1">Resultado del clima</h1>
+            <>
+              <p>Region: {infoClima.location.name}</p>
+              <p>Temperatura: {infoClima.current.temp_c}°C</p>
+              <p>Temperatura: {infoClima.current.temp_f}F</p>
+              <p>Fecha y hora: {infoClima.location.localtime}Hs</p>
+            </>
+          </div>
+        </div>
+      ) : (
+        <>
+        </>
+
+      )}
+
     </>
+
+
   )
 }
-
 export default App
