@@ -2,7 +2,6 @@
   "name": "frontend-clima",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -26,3 +25,4 @@
     "vite": "^4.4.5"
   }
 }
+
