@@ -1,0 +1,29 @@
+version: '3' 
+
+services:
+  backend:
+    image: registry.access.redhat.com/ubi8/openjdk-17:1.15-1.1682053058:latest 
+    ports:
+      - "8082:8082" 
+    environment:
+      - DATABASE_URL= jdbc:postgresql://backend-java-clima.micaela-araujo-dev.svc.cluster.local:5432/postgres
+    depends_on:
+      - db
+
+  frontend:
+    image: frontimagen:latest 
+    ports:
+      - "5500:5500" 
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend-java-clima.micaela-araujo-dev.svc.cluster.local:8082/buscarclima?region=${region} 
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:latest 
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432" 
