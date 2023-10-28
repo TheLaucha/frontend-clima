@@ -23,8 +23,7 @@ function App() {
     } else {
       try {
         setLoading(true);
-       // const response = await axios.post(`http://backend-java-clima.micaela-araujo-dev.svc.cluster.local:8082/buscarclima?region=${region}`);
-       const response = await axios.get(`https://consuming-apirest-java-deploy-git-micaela-araujo-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/buscarclima`);
+       const response = await axios.post(`http://backend-java-clima.micaela-araujo-dev.svc.cluster.local:8082/buscarclima?region=${region}`);
         console.log('Respuesta del servidor:', response.data);
         setInfoClima(response.data);
         setLoading(false);
