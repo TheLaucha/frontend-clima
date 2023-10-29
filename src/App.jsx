@@ -24,10 +24,10 @@ function App() {
       try {
         const response = await axios.post(
           'https://consuming-apirest-java-deploy-git-micaela-araujo-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/buscarclima',
-          null, // Puedes enviar un cuerpo vacío si el parámetro es solo un @RequestParam
+          null, 
           {
             params: {
-              region: region, // Pasa la región como parámetro en la URL
+              region: region, 
             },
           }
         );
