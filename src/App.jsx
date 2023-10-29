@@ -23,7 +23,7 @@ function App() {
     } else {
       try {
         setLoading(true);
-       const response = await axios.post(`http://backend-java-clima.micaela-araujo-dev.svc.cluster.local:8081/buscarclima?region=${region}`);
+       const response = await axios.post(`https://backend-java-clima.micaela-araujo-dev.svc.cluster.local:8081/buscarclima?region=${region}`);
         console.log('Respuesta del servidor:', response.data);
         setInfoClima(response.data);
         setLoading(false);
