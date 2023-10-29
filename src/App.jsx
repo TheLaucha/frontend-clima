@@ -22,8 +22,15 @@ function App() {
       setError('Por favor, ingresa una región válida');
     } else {
       try {
-        setLoading(true);
-       const response = await axios.post(`https://backend-java-clima.micaela-araujo-dev.svc.cluster.local:8081/buscarclima?region=${region}`);
+        const response = await axios.post(
+          'https://consuming-apirest-java-deploy-git-micaela-araujo-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/buscarclima',
+          null, // Puedes enviar un cuerpo vacío si el parámetro es solo un @RequestParam
+          {
+            params: {
+              region: region, // Pasa la región como parámetro en la URL
+            },
+          }
+        );
         console.log('Respuesta del servidor:', response.data);
         setInfoClima(response.data);
         setLoading(false);
