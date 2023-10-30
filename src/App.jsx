@@ -23,7 +23,7 @@ function App() {
     } else {
       try {
         const response = await axios.post(
-          'https://consuming-apirest-java-deploy-git-micaela-araujo-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/buscarclima',
+          'https://consuming-apirest-java-deploy-lautaro-espinillo-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/buscarclima',
           null, 
           {
             params: {
